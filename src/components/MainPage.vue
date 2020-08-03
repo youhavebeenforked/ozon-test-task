@@ -49,18 +49,18 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import SearchWidget from '@/components/SearchWidget.vue';
 import Skull from '@/assets/Skull.vue';
 import Sun from '@/assets/Sun.vue';
-import { Characters } from "@/global"
+import { Characters } from '@/global';
 
 @Component({ components: { SearchWidget, Skull, Sun } })
 export default class MainPage extends Vue {
-  private characters = {} as Characters 
+  private characters = {} as Characters;
 
   async getCharacters() {
     try {
       const response = await fetch('https://rickandmortyapi.com/api/character/');
       this.characters = await response.json();
     } catch {
-      alert('Что-то пошло не так')
+      alert('Что-то пошло не так');
     }
   }
 
@@ -69,22 +69,26 @@ export default class MainPage extends Vue {
   }
 
   async goToNext() {
-    try {
-      // @ts-ignore
-      const response = await fetch(this.characters.info.next);
-      this.characters = await response.json();
-    } catch {
-      alert('Что-то пошло не так')
+    if (this.characters.info.next) {
+      try {
+        // @ts-ignore
+        const response = await fetch(this.characters.info.next);
+        this.characters = await response.json();
+      } catch {
+        alert('Что-то пошло не так');
+      }
     }
   }
 
   async goToPrev() {
-    try {
-      // @ts-ignore
-      const response = await fetch(this.characters.info.prev);
-      this.characters = await response.json();
-    } catch {
-      alert('Что-то пошло не так')
+    if (this.characters.info.prev) {
+      try {
+        // @ts-ignore
+        const response = await fetch(this.characters.info.prev);
+        this.characters = await response.json();
+      } catch {
+        alert('Что-то пошло не так');
+      }
     }
   }
 
